@@ -1,0 +1,4 @@
+---
+- name: Debug for testing
+  debug:
+    msg: "my message"

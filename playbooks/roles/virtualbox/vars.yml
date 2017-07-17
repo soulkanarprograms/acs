@@ -1,0 +1,17 @@
+---
+playbook_dir: $PWD
+virtualbox_version: VirtualBox-5.0
+virtualbox_repo_url: http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+virtualbox_dependecies: 
+  - gcc
+  - make
+  - patch
+  - dkms
+  - qt
+  - libgomp
+  - kernel-headers
+  - kernel-devel
+  - fontforge
+  - binutils
+  - glibc-headers
+  - glibc-devel

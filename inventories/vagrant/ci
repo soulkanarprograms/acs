@@ -1,0 +1,13 @@
+[dev-ci]
+192.168.2.5
+
+[hmg-ci]
+192.168.2.5
+
+[prd-ci]
+192.168.2.5
+
+[ci:children]
+dev-ci
+hmg-ci
+prd-ci

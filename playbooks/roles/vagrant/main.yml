@@ -1,0 +1,11 @@
+---
+- hosts: 127.0.0.1
+  become: true
+
+  vars_files:
+  - vars.yml
+
+  tasks:
+  - name: Install Vagrant
+    yum: name={{ vagrant_repo_url }} state=present
+    when: ansible_os_family == "RedHat"

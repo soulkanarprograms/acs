@@ -1,0 +1,13 @@
+[dev-www]
+192.168.2.5
+
+[hmg-www]
+192.168.2.5
+
+[prd-www]
+192.168.2.5
+
+[www:children]
+dev-www
+hmg-www
+prd-www

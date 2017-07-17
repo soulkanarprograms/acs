@@ -1,0 +1,4 @@
+---
+- name: WWW Tasks Files
+  debug:
+    msg: debug msg

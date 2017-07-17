@@ -1,0 +1,13 @@
+[dev-db]
+192.168.2.5
+
+[hmg-db]
+192.168.2.5
+
+[prd-db]
+192.168.2.5
+
+[db:children]
+dev-db
+hmg-db
+prd-db

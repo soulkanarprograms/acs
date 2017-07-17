@@ -1,0 +1,8 @@
+---
+# vars file for bonis.jboss
+---
+firewall_allowed_tcp_ports:
+  - "22"
+  - "80"
+
+varnish_use_default_vcl: false

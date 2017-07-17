@@ -1,0 +1,61 @@
+---
+- hosts: 127.0.0.1
+  become: true
+
+  vars_files:
+  - vars.yml
+
+  tasks:
+  - name: Install VirtualBox Dependences
+    yum: name="{{ item }}" state=present
+    with_items: "{{ virtualbox_dependecies }}"
+    when: ansible_os_family == "RedHat"
+
+  - name: Download VirtualBox Repository
+    get_url:
+      url: "{{ virtualbox_repo_url }}"
+      dest: /etc/yum.repos.d
+      mode: 0644
+    when: ansible_os_family == "RedHat"
+    run_once: true
+
+  # - name: Update Repository List
+  #   command: sudo {{ item }}
+  #   with_items: 
+  #    - rm -fr /var/cache/yum/*
+  #    - yum clean all
+  #    - yum repolist   
+  #   when: ansible_os_family == "RedHat"
+
+  - name: Install VirtualBox
+    command: yum install -y {{ virtualbox_version }}
+    when: ansible_os_family == "RedHat"
+
+  #- name: Install VirtualBox
+  #  yum: name="{{ virtualbox_version }}" state=present
+  #  when: ansible_os_family == "RedHat"
+
+  - name: Check that you have the kernel sources downloaded for your running kernel version (if they don't match you might need to yum update and reboot)
+    command: ls /usr/src/kernels/
+    register: running_kernel_version
+    when: ansible_os_family == "RedHat"
+
+  - name: Check that you have the kernel sources downloaded for your running kernel version (if they don't match you might need to yum update and reboot)
+    command: uname -r
+    register: downloaded_kernel_version
+    when: ansible_os_family == "RedHat"
+
+  - name: if they don't match you might need to yum update and reboot
+    command: "{{ item }}"
+    with_items: 
+     - yum update -y
+     - reboot
+    when: ansible_os_family == "RedHat" and running_kernel_version != downloaded_kernel_version
+    run_once: true
+
+  - name: Build the VirtualBox kernel module 
+    command: echo {{ item }}
+    with_items: 
+     - export KERN_DIR=/usr/src/kernels/$(uname -r)
+     - /sbin/rcvboxdrv setup
+    when: ansible_os_family == "RedHat"
